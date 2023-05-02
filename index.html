@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Libre+Caslon+Text&family=Niconne&family=Outfit&family=Work+Sans:wght@600&display=swap");
+    </style>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Libre+Caslon+Text&family=Niconne&family=Outfit:wght@400;700&family=Work+Sans:wght@600&display=swap");
+    </style>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="./icons/tic-tac-toe-favicon.png"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./javascript.js" defer></script>
+    <title>Tic Tac Toe</title>
+  </head>
+  <body>
+    <div class="title">Tic Tac Toe</div>
+    <div class="mode-picker">
+      <button class="ai-mode">
+        <div class="icon"></div>
+        <span class="text">1 Player</span>
+      </button>
+      <button class="players-mode">
+        <div class="icon"></div>
+        <span class="text">2 Players</span>
+      </button>
+    </div>
+    <div class="tic-tac-toe hidden transparent">
+      <div class="cell empty" id="cell-1"></div>
+      <div class="gap column-gap" id="column-gap-1"></div>
+      <div class="cell empty" id="cell-2"></div>
+      <div class="gap column-gap" id="column-gap-2"></div>
+      <div class="cell empty" id="cell-3"></div>
+      <div class="gap row-gap" id="row-gap-1"></div>
+      <div class="cell empty" id="cell-4"></div>
+      <div class="cell empty" id="cell-5"></div>
+      <div class="cell empty" id="cell-6"></div>
+      <div class="gap row-gap" id="row-gap-2"></div>
+      <div class="cell empty" id="cell-7"></div>
+      <div class="cell empty" id="cell-8"></div>
+      <div class="cell empty" id="cell-9"></div>
+      <div class="winning-line"></div>
+    </div>
+    <div class="match-instruction"></div>
+    <div class="match-conclusion"></div>
+    <div class="match-history hidden">
+      <div class="title">Match History</div>
+      <div class="matches-container">
+        <div class="matches">
+          <!-- <div class="match">
+            <div class="text-container">
+              <div>Player 1</div>
+              <div>></div>
+              <div>Player 2</div>
+            </div>
+          </div>
+          <div class="match win-ai">
+            <div class="text-container">
+              <div>Player</div>
+              <div>></div>
+              <div>Bot</div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

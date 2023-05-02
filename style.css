@@ -1,0 +1,355 @@
+html {
+  font-family: outfit, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  --always-light-color: white; /* doesn't change even in dark mode */
+  --light-color: white;
+  --dark-color: black;
+  --x-winning-line-color: #775a6ebc;
+  --o-winning-line-color: #d60a7a;
+  --button-color: #f4ebd0;
+  --bg-color: #362d86;
+  --match-color: #800080;
+  --win-match-color: green;
+  --ttt-gap-size: 15px; /* ttt=tic tac toe */
+  --ttt-cell-size: 220px;
+  --ttt-grid-size: calc(
+    calc(3 * var(--ttt-cell-size)) + calc(2 * var(--ttt-gap-size))
+  );
+
+  /* #region winning line offset variables */
+  --x-row-offest: 0px;
+  --y-row-1-offset: calc(
+    calc(0.5 * var(--ttt-cell-size) - var(--ttt-gap-size))
+  );
+  --y-row-2-offset: calc(1.5 * var(--ttt-cell-size));
+  --y-row-3-offset: calc(
+    calc(2.5 * var(--ttt-cell-size)) + var(--ttt-gap-size)
+  );
+  --x-column-offest: calc(1.5 * var(--ttt-cell-size));
+  --y-column-1-offset: calc(var(--ttt-cell-size) + var(--ttt-gap-size));
+  --y-column-2-offset: 0px;
+  --y-column-3-offset: calc(-1 * var(--y-column-1-offset));
+  --x-diagonal-main-offset: 150px;
+  --y-diagonal-main-offset: calc(
+    calc(1.5 * var(--ttt-cell-size)) - var(--ttt-gap-size)
+  );
+  --x-diagonal-secondary-offset: calc(-1 * var(--y-diagonal-main-offset));
+  --y-diagonal-secondary-offset: var(--x-diagonal-main-offset);
+  /* #endregion */
+}
+body {
+  margin: 0;
+
+  background-color: var(--bg-color);
+
+  min-height: 100vh;
+  min-width: 100vw;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title {
+  font-size: 5rem;
+  font-weight: 700;
+  text-align: center;
+
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 70px;
+
+  color: var(--always-light-color);
+}
+.mode-picker {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+
+  width: 100%;
+  height: 100px;
+}
+.mode-picker button {
+  font-size: 3rem;
+  font-weight: 300;
+
+  width: 500px;
+  height: 100%;
+
+  background-color: var(--button-color);
+  color: var(--dark-color);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+  border-radius: 100px;
+  border: none;
+
+  transition: all 0.3s;
+}
+.mode-picker button:hover {
+  transform: scale(1.1);
+}
+.mode-picker .icon {
+  height: 80%;
+  aspect-ratio: 1/1;
+}
+.mode-picker .ai-mode .icon {
+  background-image: url(./icons/computer-icon.png);
+  background-size: contain;
+}
+.mode-picker .players-mode .icon {
+  background-image: url(./icons/hand-icon.png);
+  background-size: contain;
+}
+
+/* #region tic tac toe */
+.tic-tac-toe {
+  position: relative;
+
+  width: calc(3 * var(--ttt-cell-size) + 2 * var(--ttt-gap-size));
+  height: calc(3 * var(--ttt-cell-size) + 2 * var(--ttt-gap-size));
+
+  margin-top: 120px;
+
+  display: grid;
+  grid-template:
+    var(--ttt-cell-size) var(--ttt-gap-size) var(--ttt-cell-size) var(
+      --ttt-gap-size
+    )
+    var(--ttt-cell-size) / var(--ttt-cell-size) var(--ttt-gap-size)
+    var(--ttt-cell-size) var(--ttt-gap-size) var(--ttt-cell-size);
+
+  overflow: hidden;
+
+  transition: all 0.3s ease-out;
+}
+.tic-tac-toe.transparent {
+  opacity: 0;
+}
+.tic-tac-toe.hidden {
+  height: 0;
+}
+/* #region tic tac toe cells */
+.tic-tac-toe .cell {
+  background-color: var(--bg-color);
+  border-radius: 10%;
+
+  transition: all 0.1s ease-out;
+
+  background-size: 0% 0%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.tic-tac-toe .cell.empty:hover {
+  background-color: hsl(246, 50%, 40%);
+}
+
+.tic-tac-toe .cell.x {
+  background-image: url(./icons/x.svg);
+  background-size: 70% 70%;
+}
+.tic-tac-toe .cell.o {
+  background-image: url(./icons/o.svg);
+  background-size: 84% 84%;
+}
+/* #endregion */
+/* #region tic tac toe gaps */
+.tic-tac-toe .gap {
+  background-color: var(--light-color);
+  border-radius: 100px;
+}
+.row-gap,
+.column-gap {
+  transition: all 0.5s ease-out;
+}
+.tic-tac-toe.transparent .row-gap {
+  transform: scale(0, 1);
+}
+.tic-tac-toe.transparent .column-gap {
+  transform: scale(1, 0);
+}
+.tic-tac-toe #row-gap-1 {
+  grid-row: 2;
+  grid-column: 1 / -1;
+}
+.tic-tac-toe #row-gap-2 {
+  grid-row: 4;
+  grid-column: 1 / -1;
+}
+.tic-tac-toe #column-gap-1 {
+  grid-row: 1 / -1;
+  grid-column: 2;
+}
+.tic-tac-toe #column-gap-2 {
+  grid-row: 1 / -1;
+  grid-column: 4;
+}
+/* #endregion */
+
+.tic-tac-toe .winning-line {
+  animation: line-width-animation 1s forwards;
+  position: absolute;
+  height: 30px;
+  width: var(--ttt-grid-size);
+  border-radius: 100px;
+  opacity: 0;
+
+  transition: opacity 1s ease-in;
+}
+.tic-tac-toe .winning-line.row-1 {
+  transform: translate(var(--x-row-offest), var(--y-row-1-offset));
+}
+.tic-tac-toe .winning-line.row-2 {
+  transform: translate(var(--x-row-offest), var(--y-row-2-offset));
+}
+.tic-tac-toe .winning-line.row-3 {
+  transform: translate(var(--x-row-offest), var(--y-row-3-offset));
+}
+.tic-tac-toe .winning-line.column-1 {
+  transform: rotate(90deg)
+    translate(var(--x-column-offest), var(--y-column-1-offset));
+}
+.tic-tac-toe .winning-line.column-2 {
+  transform: rotate(90deg)
+    translate(var(--x-column-offest), var(--y-column-2-offset));
+}
+.tic-tac-toe .winning-line.column-3 {
+  transform: rotate(90deg)
+    translate(var(--x-column-offest), var(--y-column-3-offset));
+}
+.tic-tac-toe .winning-line.diagonal-main {
+  animation: diagonal-line-width-animation 1s forwards;
+  width: calc(1.4 * calc(3 * var(--ttt-cell-size)));
+  transform: rotate(45deg)
+    translate(var(--x-diagonal-main-offset), var(--y-diagonal-main-offset));
+}
+.tic-tac-toe .winning-line.diagonal-secondary {
+  animation: diagonal-line-width-animation 1s forwards;
+  width: calc(1.4 * calc(3 * var(--ttt-cell-size)));
+  transform: rotate(-45deg)
+    translate(
+      var(--x-diagonal-secondary-offset),
+      var(--y-diagonal-secondary-offset)
+    );
+}
+.tic-tac-toe .winning-line.x {
+  background-color: var(--x-winning-line-color);
+  opacity: 1;
+}
+.tic-tac-toe .winning-line.o {
+  background-color: var(--o-winning-line-color);
+  opacity: 1;
+}
+/* #endregion */
+.match-instruction {
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+  font-size: 2.5rem;
+
+  color: var(--always-light-color);
+
+  transition: all 0.4s;
+}
+.match-instruction.hidden {
+  opacity: 0;
+}
+.match-conclusion {
+  margin-top: 70px;
+  margin-bottom: 100px;
+
+  font-size: 3rem;
+
+  color: var(--always-light-color);
+
+  transition: all 0.3s;
+}
+.match-conclusion.hidden {
+  opacity: 0;
+}
+/* #region match history */
+.match-history {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  width: 1000px;
+
+  color: var(--light-color);
+
+  transition: all 0.3s ease-out;
+}
+.match-history .title {
+  width: 100%;
+
+  font-size: 4rem;
+  text-align: center;
+}
+.match-history .matches {
+  background-color: var(--light-color);
+
+  height: min-content;
+  max-height: 500px;
+  border-radius: 30px;
+  padding-top: 3rem;
+  padding-bottom: 3em;
+
+  overflow-y: scroll;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+@keyframes match-animation {
+  0% {
+    transform: translate(-100%, 0%);
+  }
+  100% {
+    transform: translate(0%, 0%);
+  }
+}
+.match-history .matches .match {
+  background-color: var(--match-color);
+
+  font-size: 3rem;
+  text-align: center;
+
+  height: 3.2rem;
+  padding-top: 1rem;
+  padding-bottom: 1.2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  animation: match-animation 1s forwards;
+}
+.match-history .matches .match .text-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.match-history .matches .match .text-container > * {
+  min-width: 15%;
+}
+.match-history .matches .match:hover {
+  background-color: rgb(102, 0, 102);
+}
+.match-history .matches .match.lose-ai {
+  color: #ff9974;
+}
+.match-history .matches .match.win-ai {
+  color: var(--win-match-color);
+}
+.match-history.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+/* #endregion */
+button,
+.cell.empty,
+.match {
+  cursor: pointer;
+  transition: all 0.3s;
+}
