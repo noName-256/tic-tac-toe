@@ -1,7 +1,6 @@
 html {
   font-family: outfit, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  --always-light-color: white; /* doesn't change even in dark mode */
   --light-color: white;
   --dark-color: black;
   --x-winning-line-color: #775a6ebc;
@@ -12,6 +11,7 @@ html {
   --win-match-color: green;
   --ttt-gap-size: 15px; /* ttt=tic tac toe */
   --ttt-cell-size: 220px;
+  --winning-line-size: 30px;
   --ttt-grid-size: calc(
     calc(3 * var(--ttt-cell-size)) + calc(2 * var(--ttt-gap-size))
   );
@@ -37,6 +37,22 @@ html {
   --y-diagonal-secondary-offset: var(--x-diagonal-main-offset);
   /* #endregion */
 }
+@media (max-width: 700px) {
+  html {
+    --ttt-gap-size: 11.25px; /* ttt=tic tac toe */
+    --ttt-cell-size: 165px;
+    --winning-line-size: 22.5px;
+    --x-diagonal-main-offset: 112.5px;
+  }
+}
+@media (max-width: 520px) {
+  html {
+    --ttt-gap-size: 7.5px; /* ttt=tic tac toe */
+    --ttt-cell-size: 110px;
+    --winning-line-size: 15px;
+    --x-diagonal-main-offset: 75px;
+  }
+}
 body {
   margin: 0;
 
@@ -50,7 +66,7 @@ body {
   align-items: center;
 }
 .title {
-  font-size: 5rem;
+  font-size: min(15vw, 5rem);
   font-weight: 700;
   text-align: center;
 
@@ -58,21 +74,21 @@ body {
   margin-top: 10px;
   margin-bottom: 70px;
 
-  color: var(--always-light-color);
+  color: var(--light-color);
 }
 .mode-picker {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: min(40px, 5vw);
 
   width: 100%;
-  height: 100px;
+  height: min(100px, 11vh);
 }
 .mode-picker button {
-  font-size: 3rem;
+  font-size: min(3rem, 6vw);
   font-weight: 300;
 
-  width: 500px;
+  width: min(500px, 45vw);
   height: 100%;
 
   background-color: var(--button-color);
@@ -81,7 +97,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 35px;
+  gap: min(35px, 3vw);
   border-radius: 100px;
   border: none;
 
@@ -91,7 +107,8 @@ body {
   transform: scale(1.1);
 }
 .mode-picker .icon {
-  height: 80%;
+  margin-left: 15px;
+  height: min(80%, 7.5vh);
   aspect-ratio: 1/1;
 }
 .mode-picker .ai-mode .icon {
@@ -107,8 +124,8 @@ body {
 .tic-tac-toe {
   position: relative;
 
-  width: calc(3 * var(--ttt-cell-size) + 2 * var(--ttt-gap-size));
-  height: calc(3 * var(--ttt-cell-size) + 2 * var(--ttt-gap-size));
+  width: var(--ttt-grid-size);
+  height: var(--ttt-grid-size);
 
   margin-top: 120px;
 
@@ -190,7 +207,7 @@ body {
 .tic-tac-toe .winning-line {
   animation: line-width-animation 1s forwards;
   position: absolute;
-  height: 30px;
+  height: var(--winning-line-size);
   width: var(--ttt-grid-size);
   border-radius: 100px;
   opacity: 0;
@@ -248,7 +265,7 @@ body {
 
   font-size: 2.5rem;
 
-  color: var(--always-light-color);
+  color: var(--light-color);
 
   transition: all 0.4s;
 }
@@ -257,11 +274,11 @@ body {
 }
 .match-conclusion {
   margin-top: 70px;
-  margin-bottom: 100px;
+  margin-bottom: min(100px, 5vh);
 
   font-size: 3rem;
 
-  color: var(--always-light-color);
+  color: var(--light-color);
 
   transition: all 0.3s;
 }
@@ -270,28 +287,25 @@ body {
 }
 /* #region match history */
 .match-history {
-  margin-top: 100px;
-  margin-bottom: 100px;
-  width: 1000px;
+  margin-top: min(100px, 5vh);
+  margin-bottom: min(100px, 5vh);
+  width: min(1000px, 90vw);
 
   color: var(--light-color);
 
   transition: all 0.3s ease-out;
 }
 .match-history .title {
-  width: 100%;
-
-  font-size: 4rem;
-  text-align: center;
+  margin-bottom: min(8vh, 70px);
 }
 .match-history .matches {
   background-color: var(--light-color);
 
   height: min-content;
-  max-height: 500px;
+  max-height: min(500px, 60vh);
   border-radius: 30px;
   padding-top: 3rem;
-  padding-bottom: 3em;
+  padding-bottom: 3rem;
 
   overflow-y: scroll;
 
@@ -310,10 +324,10 @@ body {
 .match-history .matches .match {
   background-color: var(--match-color);
 
-  font-size: 3rem;
+  font-size: min(3rem, 10vw);
   text-align: center;
 
-  height: 3.2rem;
+  height: min(3.2rem, 4.5vh);
   padding-top: 1rem;
   padding-bottom: 1.2rem;
 
